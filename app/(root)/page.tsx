@@ -1,36 +1,38 @@
-import React from 'react'
 import HeaderBox from '@/components/HeaderBox'
-import { title } from 'process';
-import TotalBalanceBox from '@/components/TotalBalanceBox';
 import RightSidebar from '@/components/RightSidebar';
+import TotalBalanceBox from '@/components/TotalBalanceBox';
+import { getLoggedInUser } from '@/lib/actions/user.actions';
 
-const Home = () => {
-  const loggedIn = {firstName : 'Adrian' , lastName : 'Doe' ,email : 'adrian.doe@me.com'};
+const Home = async () => {
+  const loggedIn = await getLoggedInUser();
+
   return (
-    <section className ="home">
-        <div className= "home-content">
-          <header className="home-header">
-            <HeaderBox 
-              type='greeting'
-              title ='Welcome'
-              user = {loggedIn?.firstName || 'Guset'}
-              subtext = 'Access manage your account and transactions  efficiently.'
-            />
-
-            <TotalBalanceBox
-            accounts ={[]}
-            totalBanks ={1}
-            totalCurrentBalance={1250.50}
-            />
-          </header>
-            RECENT TRANSACTION
-        </div>
-        <RightSidebar
-          user = {loggedIn}
-          transactions = {[]}
-          banks = {[{currentBalance : 1250.50},{currentBalance : 1950.50}]}
+    <section className="home">
+      <div className="home-content">
+        <header className="home-header">
+          <HeaderBox 
+            type="greeting"
+            title="Welcome"
+            user={loggedIn?.name || 'Guest'}
+            subtext="Access and manage your account and transactions efficiently."
           />
-     </section>
+
+          <TotalBalanceBox 
+            accounts={[]}
+            totalBanks={1}
+            totalCurrentBalance={1250.35}
+          />
+        </header>
+
+        RECENT TRANSACTIONS
+      </div>
+
+      <RightSidebar 
+        user={loggedIn}
+        transactions={[]}
+        banks={[{ currentBalance: 123.50 }, { currentBalance: 500.50}]}
+      />
+    </section>
   )
 }
 
